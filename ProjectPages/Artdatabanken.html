@@ -9,7 +9,7 @@
 
 
 <style type="text/css">
-    pre { line-height: 125%; }
+    pre { line-height: 120%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
 span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
 td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
@@ -56,14 +56,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .s1 { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Single */
 .highlight .ss { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Symbol */
 .highlight .il { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer.Long */
-  </style>
-<style type="text/css">
-    
-
-.container { width:90% !important;}
+.container { width:80% !important;}
 
   </style>
-
 
 
 <style type="text/css">
@@ -870,7 +865,7 @@ body{
   text-transform:none;
   line-height:1.28581;
   letter-spacing:0;
-  font-size:14px;
+  font-size:12px;
   font-weight:400;
   color:#182026;
   font-family:-apple-system, "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Open Sans", "Helvetica Neue", "Icons16", sans-serif; }
@@ -4557,7 +4552,7 @@ form{
   .bp3-running-text table th, table.bp3-html-table th{
     color:#182026;
     font-weight:600; }
-  
+
   .bp3-running-text table td,
   table.bp3-html-table td{
     color:#182026; }
@@ -14244,17 +14239,17 @@ a.anchor-link {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 },
                 "HTML-CSS": {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14272,11 +14267,11 @@ a.anchor-link {
 <span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">csv</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">display</span> 
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">display</span>
 
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
-<span class="kn">import</span> <span class="nn">json</span> 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;psy_settings.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span> 
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;psy_settings.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
     <span class="n">con_kwds</span>  <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
 </pre></div>
 
@@ -14289,30 +14284,20 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Large-dataset-in-CSV-with-malformed-entries-to-PostGIS">Large dataset in CSV with malformed entries to PostGIS<a class="anchor-link" href="#Large-dataset-in-CSV-with-malformed-entries-to-PostGIS">&#182;</a></h1><p>This notebook documents the process of import a large (~44GB) dataset in csv format containing geographic data of nature observations into a PostGIS database.<br>
-The data first came from the GBIF at <a href="https://www.gbif.org/dataset/38b4c89f-584c-41bb-bd8f-cd1def33e92f">https://www.gbif.org/dataset/38b4c89f-584c-41bb-bd8f-cd1def33e92f</a>. 
+The data first came from <a href="https://www.gbif.org/dataset/38b4c89f-584c-41bb-bd8f-cd1def33e92f">GBIF</a>.
 Initially, I hoped to see whether bird migrations could be detected in this data from human observations.</p>
-<p>The first step was to confirm the size and determine the number of rows in the dataset. 
-Given the size, it was not possible to open in Excel, and was done by reading and discarding the rows with the csv reader in Python.</p>
-<div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;artdatabanken.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
-    <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="n">names</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
-
-    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span> 
-    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span> 
-        <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-</pre></div>
-<p>Which resulted in a row count of 80'765'776 rows and 50 columns.</p>
-<p>The column names in the data are</p>
+By iterating over the rows of the file I could determine that the data contained 80'765'776 rows and 50 columns.
+<p>The column names in the data are: </p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+<!-- <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/art_sub_small.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/art_sub_small.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
     <span class="n">names</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">))</span>
 <span class="n">_</span> <span class="o">=</span>  <span class="p">[</span><span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;&lt;table&gt;&lt;tr&gt;&lt;td&gt;</span><span class="si">{}</span><span class="s1">&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;&lt;/td&gt;&lt;td&gt;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">ii</span><span class="o">*</span><span class="mi">10</span><span class="p">:</span><span class="n">ii</span><span class="o">*</span><span class="mi">10</span><span class="o">+</span><span class="mi">10</span><span class="p">]))))</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
 </pre></div>
@@ -14320,7 +14305,7 @@ Given the size, it was not possible to open in Excel, and was done by reading an
      </div>
 </div>
 </div>
-</div>
+</div> -->
 
 <div class="jp-Cell-outputWrapper">
 
@@ -14329,7 +14314,7 @@ Given the size, it was not possible to open in Excel, and was done by reading an
 
 <div class="jp-OutputArea-child">
 
-    
+
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
@@ -14342,7 +14327,7 @@ Given the size, it was not possible to open in Excel, and was done by reading an
 
 <div class="jp-OutputArea-child">
 
-    
+
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
@@ -14355,7 +14340,7 @@ Given the size, it was not possible to open in Excel, and was done by reading an
 
 <div class="jp-OutputArea-child">
 
-    
+
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
@@ -14368,7 +14353,7 @@ Given the size, it was not possible to open in Excel, and was done by reading an
 
 <div class="jp-OutputArea-child">
 
-    
+
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
@@ -14381,7 +14366,7 @@ Given the size, it was not possible to open in Excel, and was done by reading an
 
 <div class="jp-OutputArea-child">
 
-    
+
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
@@ -14399,24 +14384,24 @@ Given the size, it was not possible to open in Excel, and was done by reading an
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>With data of this size, we need some method of querying relevant entries to do meaningful work with it.<br>
-I will load the data into a PostGIS database, which also support spatial functions and queries.</p>
-<p>The first approach was to use COPY in psql with</p>
 
+<p>To do any meaningful analysis on this data, we need some method of querying the relevant entries. <br>
+I will load the data into a PostGIS database, which also support spatial functions and queries.</p>
+
+<p>The first approach was to use COPY in psql with</p>
 <pre><code>\COPY
  artdatabanken(gbifid, datasetkey, occurrenceid, kingdom, phylum, class, "order", family, genus, species, infraspecificepithet, taxonrank, scientificname, verbatimscientificname, verbatimscientificnameauthorship, countrycode, locality, stateprovince, occurrencestatus, individualcount, publishingorgkey, decimallatitude, decimallongitude, coordinateuncertaintyinmeters, coordinateprecision, elevation, elevationaccuracy, depth, depthaccuracy, eventdate, day, month, year, taxonkey, specieskey, basisofrecord, institutioncode, collectioncode, catalognumber, recordnumber, identifiedby, dateidentified, license, rightsholder, recordedby, typestatus, establishmentmeans, lastinterpreted, mediatype, issue)
- FROM 
+ FROM
  "data/artdatabanken.csv"
  CSV HEADER DELIMITER "\t";'</code></pre>
-<p>to a table "artdatabanken" in which all fields have text datatype. 
-I had already tested to copy the data into a table with appropriate datatypes and found errors I was hoping to avoid.<br>
+<p>to a table "artdatabanken" in which all fields have text datatype.
+I had already tested to copy the data into a table with appropriate datatypes and found errors I was hoping to avoid.
 Perhaps I would be able to solve the problems in the data more efficiently once I had gotten it into a database.</p>
-<p>This also failed because of unclosed quotes causing entries to grow over the allowed size.<br>
-Testing different uncommon characters as quote character did not solve this.</p>
+<p>This also failed because of unclosed quotations causing entries to grow over the allowed size.<br>
+Specifying the quote character to some character I assumed would not be in the data such as, for example,  "*" did not solve this.</p>
 <p>I already knew that iterating over the rows worked fine with Python, and decided to insert each row separately.<br>
 This would take time, but would also allow me to clean each row of quote characters and other problematic symbols as well as use error handling to catch failed insertion attempts.</p>
-<p>I first did this with using text datatype for all entries, which created a table of ~15GB. 
-This was quite unmanageable on my laptop.<br>
+<p>Inserting all the data into text fields resulted in a table of size ~15GB which was quite unmanageable on my laptop.<br>
 A better approach is to create the fields with appropriate datatypes from the start and use the ability to check that the data conforms to the requirements before insertion.</p>
 <p>The process consisted of  the following steps</p>
 <ol>
@@ -14436,11 +14421,11 @@ A better approach is to create the fields with appropriate datatypes from the st
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">create_table</span><span class="p">(</span><span class="n">table_name</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">dtypes</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">cur</span><span class="p">):</span>
-    
+
     <span class="c1"># Get all table names</span>
     <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;select relname from pg_class where relkind=&#39;r&#39; and relname !~ &#39;^(pg_|sql_)&#39;;&quot;</span><span class="p">)</span>
     <span class="n">tables</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-	
+
 	<span class="c1"># Check if the current table exists    </span>
     <span class="k">if</span> <span class="p">[</span><span class="mi">1</span> <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">tables</span> <span class="k">if</span> <span class="n">table_name</span> <span class="ow">in</span> <span class="n">table</span><span class="p">]:</span>
         <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;drop table </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">table_name</span><span class="p">)</span>
@@ -14453,25 +14438,25 @@ A better approach is to create the fields with appropriate datatypes from the st
     <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
 
-<span class="k">def</span> <span class="nf">my_insertion_method</span><span class="p">(</span><span class="n">csv_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">cur</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">dtypes</span><span class="p">,</span> <span class="n">err_log</span><span class="o">=</span><span class="s2">&quot;error.log&quot;</span><span class="p">,</span> <span class="n">err_csv</span><span class="o">=</span><span class="s2">&quot;error.csv&quot;</span><span class="p">):</span> 
+<span class="k">def</span> <span class="nf">my_insertion_method</span><span class="p">(</span><span class="n">csv_name</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">cur</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">dtypes</span><span class="p">,</span> <span class="n">err_log</span><span class="o">=</span><span class="s2">&quot;error.log&quot;</span><span class="p">,</span> <span class="n">err_csv</span><span class="o">=</span><span class="s2">&quot;error.csv&quot;</span><span class="p">):</span>
 
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">csv_fname</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">err_log</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">error_log</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">err_csv</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">error_csv</span><span class="p">:</span>
 
         <span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">quoting</span><span class="o">=</span><span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_NONE</span><span class="p">)</span>  <span class="c1"># Unmatched quotations causing problems with ending entries</span>
-        
+
         <span class="n">names</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">reader</span><span class="p">)</span>
         <span class="c1"># Since order is a keyword in postgres the order column is renamed to avoid problems</span>
         <span class="n">colnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;order&quot;</span><span class="p">,</span> <span class="s2">&quot;ordercol&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">]</span>
 
         <span class="n">col_indexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">colnames</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
         <span class="n">int_indexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">ii</span> <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dtypes</span><span class="p">)</span> <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s2">&quot;int&quot;</span><span class="p">]</span>
-        
+
         <span class="n">indexes</span> <span class="o">=</span> <span class="p">[</span><span class="n">colnames</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">col</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
         <span class="n">table_columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">colnames</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">col_indexes</span><span class="p">]</span>
 
         <span class="n">error_writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">error_csv</span><span class="p">,</span> <span class="n">delimiter</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">error_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">colnames</span><span class="p">)</span>
-        
+
         <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">reader</span><span class="p">):</span>
             <span class="c1"># Clean each row from quotation marks and apostrophes</span>
             <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;`&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indexes</span><span class="p">]</span>
@@ -14481,7 +14466,7 @@ A better approach is to create the fields with appropriate datatypes from the st
                 <span class="n">values</span><span class="p">[</span><span class="n">int_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">int_index</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">values</span><span class="p">[</span><span class="n">int_index</span><span class="p">]</span> <span class="k">else</span> <span class="s1">&#39;-1&#39;</span>
 
             <span class="c1"># Try to insert and catch errors and write problematic rows to a separate file</span>
-            <span class="k">try</span><span class="p">:</span> 
+            <span class="k">try</span><span class="p">:</span>
                 <span class="n">insert_statement</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;INSERT INTO </span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2">(&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">table_columns</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;) VALUES (&#39;</span><span class="si">{}</span><span class="s2">&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;&#39;, &#39;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
                 <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SAVEPOINT my_savepoint&quot;</span><span class="p">)</span>
                 <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">insert_statement</span><span class="p">)</span>
@@ -14492,13 +14477,13 @@ A better approach is to create the fields with appropriate datatypes from the st
                 <span class="n">error_writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
                 <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;ROLLBACK TO SAVEPOINT my_savepoint&quot;</span><span class="p">)</span>
 
-            <span class="k">finally</span><span class="p">:</span> 
+            <span class="k">finally</span><span class="p">:</span>
                 <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;RELEASE SAVEPOINT my_savepoint&quot;</span><span class="p">)</span>
 
     <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
     <span class="k">return</span>
 
-<span class="n">csv_fname</span> <span class="o">=</span> <span class="s2">&quot;/media/michael/My Passport/Michael/artdatabanken.csv&quot;</span>
+<span class="n">csv_fname</span> <span class="o">=</span> <span class="s2">&quot;data/artdatabanken.csv&quot;</span>
 <span class="n">table_name</span> <span class="o">=</span> <span class="s2">&quot;artdatabanken&quot;</span>
 
 
@@ -14533,6 +14518,7 @@ A better approach is to create the fields with appropriate datatypes from the st
 
 <span class="n">create_table</span><span class="p">(</span><span class="n">table_name</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">dtypes</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">cur</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">my_insertion_method</span><span class="p">(</span><span class="n">csv_fname</span><span class="p">,</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">cur</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">dtypes</span><span class="p">)</span>
+<span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 
      </div>
@@ -14549,9 +14535,9 @@ Without error handling this would have caused a failure of the total insertion.<
 <p>According to the log file, the insertion failed because the row was missing an entry for the <code>eventdate</code>-column.<br>
 Something which could have been checked before the insertion, but this shows that the approach can catch errors without breaking the process.</p>
 
-<pre><code>Failed to insert row 
-    ['1493233058', '38b4c89f-584c-41bb-bd8f-cd1def33e92f', 'urn:lsid:artportalen.se:Sighting:61036656', 'Animalia', 'Arthropoda', 'Insecta', 'Lepidoptera', 'Tortricidae', 'Rhyacionia', 'Rhyacionia pinicolana', '', 'SPECIES', 'Rhyacionia pinicolana (Doubleday, 1849)', 'Rhyacionia pinicolana', '(Doubleday, 1849)', 'SE', 'Framnäs, Bollnäs', '', 'PRESENT', '', 'b8323864-602a-4a7d-9127-bb903054e97d', '61.365816', '16.396104', '500.0', '', '', '', '', '', '', '', '', '', '1739337', '1739337', 'HUMAN_OBSERVATION', 'ArtDatabanken', 'Artportalen', '101186632', '', '', '', 'CC0_1_0', 'Hans Höglund', 'Hans Höglund', '', '', '2021-03-11T18:15:28.807Z', '', 'RECORDED_DATE_UNLIKELY;GEODETIC_DATUM_ASSUMED_WGS84'] 
-with Error 
+<pre><code>Failed to insert row
+    ['1493233058', '38b4c89f-584c-41bb-bd8f-cd1def33e92f', 'urn:lsid:artportalen.se:Sighting:61036656', 'Animalia', 'Arthropoda', 'Insecta', 'Lepidoptera', 'Tortricidae', 'Rhyacionia', 'Rhyacionia pinicolana', '', 'SPECIES', 'Rhyacionia pinicolana (Doubleday, 1849)', 'Rhyacionia pinicolana', '(Doubleday, 1849)', 'SE', 'Framnäs, Bollnäs', '', 'PRESENT', '', 'b8323864-602a-4a7d-9127-bb903054e97d', '61.365816', '16.396104', '500.0', '', '', '', '', '', '', '', '', '', '1739337', '1739337', 'HUMAN_OBSERVATION', 'ArtDatabanken', 'Artportalen', '101186632', '', '', '', 'CC0_1_0', 'Hans Höglund', 'Hans Höglund', '', '', '2021-03-11T18:15:28.807Z', '', 'RECORDED_DATE_UNLIKELY;GEODETIC_DATUM_ASSUMED_WGS84']
+with Error
     invalid input syntax for type timestamp: ""
 LINE 1: ...Rhyacionia pinicolana', '61.365816', '16.396104', '500', '')</code></pre>
 <p>This could be handled by inserting a NULL value to this entry.</p>
@@ -14559,7 +14545,7 @@ LINE 1: ...Rhyacionia pinicolana', '61.365816', '16.396104', '500', '')</code></
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
+<!-- <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[141]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
@@ -14575,12 +14561,14 @@ LINE 1: ...Rhyacionia pinicolana', '61.365816', '16.396104', '500', '')</code></
 <div class="jp-Cell-outputWrapper">
 
 
-<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea jp-Cell-outputArea"> -->
 
 <div class="jp-OutputArea-child">
 
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[141]:</div>
+
+
+    <!-- <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[141]:</div> -->
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
 
@@ -14602,8 +14590,8 @@ LINE 1: ...Rhyacionia pinicolana', '61.365816', '16.396104', '500', '')</code></
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th></th>
-      <th>0</th>
+      <!-- <th></th> -->
+      <!-- <th>0</th> -->
     </tr>
   </thead>
   <tbody>
@@ -14826,7 +14814,7 @@ LINE 1: ...Rhyacionia pinicolana', '61.365816', '16.396104', '500', '')</code></
 I did this by iterating over a list of the kingdoms, collected by gathering the unique values for the field in <code>artdatabanken</code>.</p>
 <p>At the same time, I create a geometry column which is populated using PostGIS.<br>
 This means that we can remove the old columns with the longitude and latitude.<br>
-Normally, this might not be so important. But because of the size of the data, every little bit helps. 
+Normally, this might not be so important. But because of the size of the data, every little bit helps.
 We can also remove the kingdom field since all entries are the same.</p>
 <p>Finally, a full vacuum is done to reclaim the space released with the table alterations.</p>
 <p>Running this process took a bit of time.</p>
@@ -14835,10 +14823,10 @@ We can also remove the kingdom field since all entries are the same.</p>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_subtables</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">kingdom</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">cur</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vacuum</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span> 
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_subtables</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">kingdom</span><span class="p">,</span> <span class="n">con</span><span class="p">,</span> <span class="n">cur</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">vacuum</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">execute_sql</span><span class="p">(</span><span class="n">sql</span><span class="p">):</span>
         <span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">commit</span><span class="p">:</span> 
+        <span class="k">if</span> <span class="n">commit</span><span class="p">:</span>
             <span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Creating table </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>
@@ -14891,24 +14879,24 @@ We can also remove the kingdom field since all entries are the same.</p>
 <span class="n">cur</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 
 <span class="n">table_names</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Bacteria&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;Viruses&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;incertae sedis&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;Fungi&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;Chromista&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;Animalia&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;Plantae&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;Bacteria&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Viruses&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;incertae sedis&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Fungi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Chromista&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Animalia&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Plantae&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Protozoa&quot;</span>
               <span class="p">]</span>
 
 <span class="n">table_names</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;Bacteria&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;Viruses&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;incertae&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;Fungi&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;Chromista&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;Animalia&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;Plantae&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;Bacteria&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Viruses&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;incertae&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Fungi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Chromista&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Animalia&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Plantae&quot;</span><span class="p">,</span>
     <span class="s2">&quot;Protozoa&quot;</span>
               <span class="p">]</span>
 
@@ -14975,7 +14963,7 @@ We can also remove the kingdom field since all entries are the same.</p>
 
 <div class="jp-OutputArea-child">
 
-    
+
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
@@ -15032,7 +15020,7 @@ We can also remove the kingdom field since all entries are the same.</p>
 <span class="n">cx</span><span class="o">.</span><span class="n">add_basemap</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">source</span><span class="o">=</span><span class="n">cx</span><span class="o">.</span><span class="n">providers</span><span class="o">.</span><span class="n">Stamen</span><span class="o">.</span><span class="n">TonerLite</span><span class="p">)</span>
 <span class="n">counts</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">years</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">year</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">gdf_falco</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">):</span> 
+<span class="k">for</span> <span class="n">year</span><span class="p">,</span> <span class="n">frame</span> <span class="ow">in</span> <span class="n">gdf_falco</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;year&quot;</span><span class="p">):</span>
     <span class="n">counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">index</span><span class="p">))</span>
     <span class="n">years</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
 
@@ -15056,7 +15044,7 @@ We can also remove the kingdom field since all entries are the same.</p>
 
 <div class="jp-OutputArea-child">
 
-    
+
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
@@ -15112,7 +15100,7 @@ All of these steps can be done easily in PostGIS, and returns all observations i
 <span class="s2">    FROM kommun_sweref99tm_region WHERE knnamn LIKE &#39;Gotland&#39;&quot;&quot;&quot;</span>
 
 <span class="n">cur_swe</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
-    
+
 <span class="n">gdf_gotland</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_postgis</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">con_swe</span><span class="p">)</span>
 </pre></div>
 
@@ -15218,7 +15206,7 @@ This is a lot, but possible to load into a GeoDataframe straight from the PostGI
 
 <div class="jp-OutputArea-child">
 
-    
+
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
@@ -15295,7 +15283,7 @@ This is a lot, but possible to load into a GeoDataframe straight from the PostGI
 
 <div class="jp-OutputArea-child">
 
-    
+
     <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[677]:</div>
 
 
@@ -15309,7 +15297,7 @@ This is a lot, but possible to load into a GeoDataframe straight from the PostGI
 
 <div class="jp-OutputArea-child">
 
-    
+
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
